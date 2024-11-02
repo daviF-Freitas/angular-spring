@@ -9,6 +9,12 @@
 
     <table mat-table [dataSource]="courses" class="mat-elevation-z8">
 
+      <!-- Id Column -->
+      <ng-container matColumnDef="_id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let course"> {{ course._id }} </td>
+      </ng-container>
+
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Curso </th>
@@ -21,6 +27,26 @@
         <td mat-cell *matCellDef="let course"> {{ course.category }}
           <mat-icon aria-hidden="false" aria-label="Categoria do curso">{{ course.category | category }}</mat-icon>
         </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+       <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="accent" aria-label="add new course">
+            <mat-icon (click)="onAddCourse()">add</mat-icon>
+          </button>
+       </mat-header-cell>
+
+       <mat-cell *matCellDef="let course">
+        <button mat-icon-button color="primary" aria-label="edit course">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" aria-label="delete course">
+          <mat-icon>delete</mat-icon>
+        </button>
+       </mat-cell>
+
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

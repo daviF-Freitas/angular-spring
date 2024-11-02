@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CoursesRoutingModule } from '../courses-routing.module';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -25,11 +26,13 @@ export class CoursesComponent implements OnInit {
 
   public courses$: Observable<Course[]>;
   // public courses: Course[] = [];
-  public displayedColumns = ['name', 'category'];
+  public displayedColumns = ['_id', 'name', 'category', 'actions'];
 
   constructor(
     private coursesService: CoursesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
 
     // this.courses = this.coursesService.list();
@@ -50,6 +53,10 @@ export class CoursesComponent implements OnInit {
 
   public ngOnInit(): void {
     // this.courses = this.coursesService.list();
+  }
+
+  public onAddCourse() {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 
 }

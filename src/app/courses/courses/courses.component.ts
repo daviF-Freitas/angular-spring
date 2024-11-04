@@ -9,6 +9,7 @@ import { AppMaterialModule } from '../../shared/app-material/app-material.module
 import { SharedModule } from '../../shared/shared.module';
 import { CoursesRoutingModule } from '../courses-routing.module';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesListComponent } from '../courses-list/courses-list.component';
 
 @Component({
   selector: 'app-courses',
@@ -18,6 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     CoursesRoutingModule,
     AppMaterialModule,
     SharedModule,
+    CoursesListComponent
   ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
@@ -26,7 +28,7 @@ export class CoursesComponent implements OnInit {
 
   public courses$: Observable<Course[]>;
   // public courses: Course[] = [];
-  public displayedColumns = ['_id', 'name', 'category', 'actions'];
+
 
   constructor(
     private coursesService: CoursesService,
@@ -55,8 +57,8 @@ export class CoursesComponent implements OnInit {
     // this.courses = this.coursesService.list();
   }
 
-  public onAddCourse() {
-    this.router.navigate(['new'], { relativeTo: this.route });
-  }
+  // public onAddCourse(): void {
+  //   this.router.navigate(['new'], { relativeTo: this.route });
+  // }
 
 }

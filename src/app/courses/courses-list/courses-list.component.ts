@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../model/course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,8 @@ export class CoursesListComponent {
   @Input() courses: Course[] = [];
   readonly displayedColumns = ['_id', 'name', 'category', 'actions'];
 
+  @Output() edit = new EventEmitter();
+
   constructor(
     private router: Router,
     private route: ActivatedRoute
@@ -28,6 +30,10 @@ export class CoursesListComponent {
 
   public onAddCourse() {
     this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  public onEditCourse(course: any) {
+    this.edit.emit(course);
   }
 
 

@@ -10,6 +10,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { CoursesRoutingModule } from '../courses-routing.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'console';
 
 @Component({
   selector: 'app-courses',
@@ -26,7 +28,7 @@ import { CoursesListComponent } from '../courses-list/courses-list.component';
 })
 export class CoursesComponent implements OnInit {
 
-  public courses$: Observable<Course[]>;
+  public courses$: Observable<Course[]> | null = null;
   // public courses: Course[] = [];
 
 
@@ -34,17 +36,12 @@ export class CoursesComponent implements OnInit {
     private coursesService: CoursesService,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
   ) {
 
     // this.courses = this.coursesService.list();
-    this.courses$ = this.coursesService.list()
-    .pipe(
-      catchError(error => {
-        this.onError('Erro ao carregar cursos.')
-        return of([])
-      })
-    )
+    this.refresh();
   }
 
   public onError(errorMsg: string) {
@@ -64,5 +61,29 @@ export class CoursesComponent implements OnInit {
   // public onAddCourse(): void {
   //   this.router.navigate(['new'], { relativeTo: this.route });
   // }
+
+  public onRemove(course: Course) {
+    this.coursesService.remove(course._id).subscribe(
+      () => {
+        this.refresh();
+        this.snackBar.open('Curso removido com sucesso!', 'X', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        })
+      },
+      () => this.onError('Erro ao remover curso.')
+    )
+  }
+
+  public refresh() {
+    this.courses$ = this.coursesService.list()
+    .pipe(
+      catchError(error => {
+        this.onError('Erro ao carregar cursos.')
+        return of([])
+      })
+    )
+  }
 
 }

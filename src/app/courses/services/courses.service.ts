@@ -32,12 +32,16 @@ export class CoursesService {
     return this.httpClient.get<Course>(`${this.API}/${id}`);
   }
 
-  public create(record: Course){
+  public create(record: Course) {
     return this.httpClient.post<Course>(this.API, record).pipe(first());
   }
 
-  public update(record: Partial<Course>){
+  public update(record: Partial<Course>) {
     return this.httpClient.put<Course>(`${this.API}/${record._id}`, record).pipe(first());
+  }
+
+  public remove(id: string) {
+    return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
   }
 
 }

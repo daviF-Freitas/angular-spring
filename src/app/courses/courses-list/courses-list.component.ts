@@ -22,6 +22,7 @@ export class CoursesListComponent {
   readonly displayedColumns = ['_id', 'name', 'category', 'actions'];
 
   @Output() edit = new EventEmitter();
+  @Output() remove = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -34,6 +35,10 @@ export class CoursesListComponent {
 
   public onEditCourse(course: any) {
     this.edit.emit(course);
+  }
+
+  public onDeleteCourse(course: Course) {
+    this.remove.emit(course);
   }
 
 

@@ -5,6 +5,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../model/course';
 
 @Component({
   selector: 'app-course-form',
@@ -25,15 +27,25 @@ export class CourseFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: CoursesService,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
+      _id: [''],
       name: [''],
       category: ['']
     })
   }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    const course: Course = this.route.snapshot.data['course'];
+
+    this.form.setValue({
+      _id: course._id,
+      name: course.name,
+      category: course.category
+    });
+  }
 
   public onSubmit(){
     this.service.save(this.form.value).subscribe({

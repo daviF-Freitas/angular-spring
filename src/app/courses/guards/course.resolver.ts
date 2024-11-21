@@ -2,6 +2,11 @@ import { ActivatedRouteSnapshot, Resolve, ResolveFn, RouterEvent, RouterStateSna
 import { Course } from '../model/course';
 import { Observable, of } from 'rxjs';
 import { CoursesService } from '../services/courses.service';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+ })
 
 export class courseResolver implements Resolve<Course> {
 

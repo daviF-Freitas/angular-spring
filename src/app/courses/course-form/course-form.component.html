@@ -3,7 +3,11 @@
   <mat-card-content>
     <form [formGroup]="form">
       <mat-form-field class="full-width">
-        <input matInput placeholder="Name course" formControlName="name">
+        <input matInput placeholder="Name course" formControlName="name" #name>
+        <mat-hint align="end">{{ name.value.length }}/20</mat-hint>
+        @if (form.get('name')?.invalid) {
+          <mat-error>{{ getErrorMessage('name') }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="full-width">

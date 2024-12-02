@@ -22,6 +22,7 @@ import { Course } from '../model/course';
 export class CourseFormComponent implements OnInit {
 
   public form: FormGroup;
+  public buttonDisabled: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,8 +34,10 @@ export class CourseFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       _id: [''],
       name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      category: ['', [Validators.required]]
+      category: ['', [Validators.required, Validators.nullValidator]]
     })
+
+    this.buttonDisabled = true;
   }
 
   public ngOnInit(): void {
@@ -86,4 +89,5 @@ export class CourseFormComponent implements OnInit {
     return 'Campo Inválido.';
 
   }
+
 }
